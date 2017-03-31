@@ -11,7 +11,7 @@ var polyfit = require('gulp-polyfit')
 gulp.task('polyfill', function() {
 	return gulp.src('test.js')
 		.pipe(polyfit({
-		 	minify: true, // default: true, minify the polyfill script
+		  minify: true, // default: true, minify the polyfill script
 		  features: [], // extra polyfill features
 		  filename: 'polyfill.min.js', // the polyfill file name, default: polyfill.min.js
 		  result: 'polyfill_list.json' // if specified, will output all the polyfills name
@@ -47,3 +47,4 @@ run `gulp polyfill`, and the polyfills are:
 * Array.prototype.reduce
 
 **the comment with polyfill must start with "polyfill:" and separate the features by commas**
+you can find all support features at https://polyfill.io/v2/docs/features/
