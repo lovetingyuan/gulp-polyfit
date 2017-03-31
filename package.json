@@ -1,0 +1,21 @@
+{
+  "name": "gulp-polyfit",
+  "version": "1.0.0",
+  "description": "collect polyfills marked in comments and generate the polyfill script",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "polyfill",
+    "gulp",
+    "plugin"
+  ],
+  "author": "tingyuan <1932294867@qq.com>",
+  "license": "MIT",
+  "dependencies": {
+    "acorn": "^5.0.2",
+    "gulp-util": "^3.0.8",
+    "through2": "^2.0.3"
+  }
+}
