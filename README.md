@@ -43,11 +43,11 @@ run `gulp polyfill`, and the polyfill_list.json will be:
 {
   "polyfills": [
     "Array.from",
-    "Number.parseInt",
-    "Number.isInteger",
-    "Array.prototype.map",
     "Array.prototype.filter",
-    "Array.prototype.reduce"
+    "Array.prototype.map",
+    "Array.prototype.reduce",
+    "Number.isInteger"
+    "Number.parseInt"    
   ]
 }
 ```
