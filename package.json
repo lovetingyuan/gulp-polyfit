@@ -12,6 +12,10 @@
     "gulp",
     "plugin"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lovetingyuan/gulp-polyfit.git"
+  },
   "author": "tingyuan <1932294867@qq.com>",
   "license": "MIT",
   "dependencies": {
