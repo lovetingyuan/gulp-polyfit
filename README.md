@@ -46,7 +46,7 @@ run `gulp polyfill`, and the polyfill_list.json will be:
     "Array.prototype.filter",
     "Array.prototype.map",
     "Array.prototype.reduce",
-    "Number.isInteger"
+    "Number.isInteger",
     "Number.parseInt"    
   ]
 }
