@@ -116,11 +116,11 @@ module.exports = function(config) {
         payload += chunk
       }).on('end', function() {
         payload = '// polyfills: ' + features.join(', ') + os.EOL + payload
-        var jsFile = new Vinyl({
+        callback(null, new Vinyl({
           path: path.resolve(config.filename),
           contents: new Buffer(payload)
-        })
-        callback(null, jsFile)
+        }))
+        this.emit('end')
       });
     }).on('error', function(e) {
       gutil.log(PLUGIN_NAME + ' needs a network connection')
