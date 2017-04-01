@@ -38,13 +38,19 @@ function addInt() {
 }
 console.log(addInt(1, 2, 3)) // result is 6
 ```
-run `gulp polyfill`, and the polyfills are:
-* Array.from
-* Number.parseInt
-* Number.isInteger
-* Array.prototype.map
-* Array.prototype.filter
-* Array.prototype.reduce
+run `gulp polyfill`, and the polyfill_list.json will be:
+```json
+{
+  "polyfills": [
+    "Array.from",
+    "Number.parseInt",
+    "Number.isInteger",
+    "Array.prototype.map",
+    "Array.prototype.filter",
+    "Array.prototype.reduce"
+  ]
+}
+```
 
 **the comment with polyfill must start with "polyfill:" and separate the features by commas**
 
