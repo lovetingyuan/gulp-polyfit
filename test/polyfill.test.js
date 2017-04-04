@@ -1,5 +1,4 @@
 var assert = require('assert');
-var es = require('event-stream');
 var File = require('gulp-util').File;
 var polyfit = require('../');
 var path = require('path')
@@ -10,9 +9,9 @@ describe('gulp-polyfit', function() {
     it('should output polyfills json file', function(done) {
       function testFunction(a, b) {
         /**
-        * polyfill: Function.prototype.bind, Object.assign,
-        * Date.now, Promise, fetch
-        */
+         * polyfill: Function.prototype.bind, Promise,
+         * fetch, Date.now, Object.assign
+         */
         // as the src file
         return a + b; // polyfill: Array.prototype.map, String.prototype.trim
       }
@@ -37,22 +36,17 @@ describe('gulp-polyfit', function() {
       var polyfitStream = polyfit({
         result: 'polyfills.json'
       });
-
-      // wait for the file to come back out
+        // wait for the file to come back out
       polyfitStream.on('data', function(file) {
         // make sure it came out the same way it went in
-        console.log(file.contents.toString())
         assert(file.isBuffer());
-
         // check the contents
-        if(file.path === path.resolve('polyfills.json')) {
-          assert.equal(file.contents.toString('utf8'), result);
-        }
+        assert.equal(file.contents.toString('utf8'), result);
+        // done()
       });
 
       polyfitStream.write(fakeFile);
       polyfitStream.end(done)
-
     });
 
   });
