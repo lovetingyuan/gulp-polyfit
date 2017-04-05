@@ -47,4 +47,5 @@ run `gulp polyfill`, and the polyfills are:
 * Array.prototype.reduce
 
 **the comment with polyfill must start with "polyfill:" and separate the features by commas**
+
 you can find all support features at https://polyfill.io/v2/docs/features/
