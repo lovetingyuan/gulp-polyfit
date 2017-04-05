@@ -57,7 +57,7 @@ run `gulp polyfill`, and the polyfill_list.json will be:
 
 you can find all support features at https://polyfill.io/v2/docs/features/,
 
-you can use `(LABjs)['https://github.com/getify/LABjs']` or `(yepnope.js)['https://github.com/SlexAxton/yepnope.js']` to load polyfills conditionally,
+you can use `[LABjs]('https://github.com/getify/LABjs')` or `[yepnope.js]('https://github.com/SlexAxton/yepnope.js')` to load polyfills conditionally,
 
 
 
