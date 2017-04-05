@@ -21,10 +21,10 @@
   "dependencies": {
     "acorn": "^5.0.2",
     "gulp-util": "^3.0.8",
-    "through2": "^2.0.3"
+    "through2": "^2.0.3",
+    "ty-step": "^1.0.1"
   },
   "devDependencies": {
-    "event-stream": "^3.3.4",
     "gulp": "^3.9.1",
     "mocha": "^3.2.0"
   }

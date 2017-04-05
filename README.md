@@ -11,6 +11,7 @@ var polyfit = require('gulp-polyfit')
 gulp.task('polyfill', function() {
   return gulp.src('test.js')
     .pipe(polyfit({
+      output: './', // output dir, default: './'
       minify: true, // default: true, minify the polyfill script
       features: [], // extra polyfill features
       filename: 'polyfill.min.js', // the polyfill file name, default: polyfill.min.js
@@ -38,14 +39,25 @@ function addInt() {
 }
 console.log(addInt(1, 2, 3)) // result is 6
 ```
-run `gulp polyfill`, and the polyfills are:
-* Array.from
-* Number.parseInt
-* Number.isInteger
-* Array.prototype.map
-* Array.prototype.filter
-* Array.prototype.reduce
 
-**the comment with polyfill must start with "polyfill:" and separate the features by commas**
+run `gulp polyfill`, and the polyfill_list.json will be:
 
-you can find all support features at https://polyfill.io/v2/docs/features/
+```json
+{
+  "polyfills": [
+    "Array.from",
+    "Array.prototype.filter",
+    "Array.prototype.map",
+    "Array.prototype.reduce",
+    "Number.isInteger",
+    "Number.parseInt"
+  ]
+}
+```
+
+**the polyfill comment must start with `"polyfill:"` and separate the features by commas**
+
+you can find all support features at https://polyfill.io/v2/docs/features/,
+
+you can use `(LABjs)['https://github.com/getify/LABjs']` or `(yepnope.js)['https://github.com/SlexAxton/yepnope.js']` to load polyfills conditionally,
+
