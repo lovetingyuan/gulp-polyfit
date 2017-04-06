@@ -9,7 +9,6 @@ var PluginError = gutil.PluginError;
 var Vinyl = gutil.File;
 var through = require('through2');
 var acorn = require('acorn')
-var step = require('ty-step')
 
 var PLUGIN_NAME = 'gulp-polyfit';
 
@@ -21,49 +20,44 @@ var defaultConfig = {
   result: 'polyfill_list.json'
 }
 
-function getPolyfillScripts(urlPath, filePath) {
-  var self = this
-  return function(next) {
+var headers = {
+  // polyfill.io minimum support IE7
+  'user-agent': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)'
+}
+
+function getAllScripts(fileList, cb) {
+  var self = this;
+  var index = 0
+  fileList.forEach(function(polyfill) {
     https.get({
       protocol: 'https:',
       hostname: 'cdn.polyfill.io',
-      path: urlPath,
+      path: polyfill.urlPath,
       timeout: 20000,
-      headers: {
-        // polyfill.io minimum support IE7
-        'user-agent': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)'
-      }
+      headers: headers
     }, function(res) {
       res.setEncoding('utf8');
       if (res.statusCode !== 200) {
         res.resume();
-        return next(new PluginError(PLUGIN_NAME,
+        return cb(new PluginError(PLUGIN_NAME,
           'Fail to get polyfills with http code ' + res.statusCode))
       }
-      var payload = '';
-      res.on('data', function(chunk) {
-        payload += chunk
-      }).on('end', function() {
-        // payload = '// polyfills: ' + features.join(', ') + os.EOL + payload
-        var file = new Vinyl({
-          path: filePath,
-          contents: new Buffer(payload)
-        })
-        self.push(file)
-        next(null, file)
+      self.push(new Vinyl({
+        path: polyfill.filePath,
+        contents: res
+      }))
+      index++
+      if(index === fileList.length) cb()
+    }).on('error', cb);
+  })
 
-      });
-    }).on('error', next);
-  }
 }
 
 module.exports = function(config) {
   if (!config || typeof config !== 'object') {
     config = defaultConfig
   } else {
-    if ('minify' in config) {
-      config.minify = !!config.minify
-    } else {
+    if (!('minify' in config)) {
       config.minify = defaultConfig.minify
     }
     if (!(config.features instanceof Array)) {
@@ -108,10 +102,7 @@ module.exports = function(config) {
       }
     })
     callback()
-
-    // callback(null, file)
   }, function(callback) {
-    var self = this
     var output = config.output
     var getPolyfills = function(result) {
       var polyfills = {}
@@ -125,29 +116,27 @@ module.exports = function(config) {
 
     var features = config.features.concat(getPolyfills(polyfillList))
 
-    config.result && self.push(new Vinyl({
+    config.result && this.push(new Vinyl({
       path: path.resolve(output, config.result),
       contents: new Buffer(JSON.stringify({
         polyfills: features.slice()
       }, null, 2))
     }))
 
-    features.push(features.join(','))
-    step.call(null, features.map(function(feature, i) {
+    var polyfills =  features.concat(features.join(',')).map(function(feature, i) {
       var params = [];
       params.push('features=' + feature)
       params.push('flags=always')
       var urlPath = '/v2/polyfill' +
         (config.minify ? '.min' : '') + '.js?' + params.join('&')
-      var fileName = (i === features.length - 1) ? config.filename : (feature + '.js')
-      return getPolyfillScripts.call(self, urlPath, path.resolve(output, fileName))
-    }))(function(err, list) {
-      if (err) {
-        gutil.log(PLUGIN_NAME + ' needs a network connection and check your polyfill name')
-        gutil.log(PLUGIN_NAME, err)
-        return callback(err)
+      var fileName = (i === features.length) ? config.filename : (feature + '.js')
+      return {
+        urlPath: urlPath,
+        filePath: path.resolve(output, fileName)
       }
-      callback()
     })
+
+    getAllScripts.call(this, polyfills, callback)
+
   });
 };

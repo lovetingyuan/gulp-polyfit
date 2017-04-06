@@ -42,6 +42,8 @@ describe('gulp-polyfit', function() {
         assert(file.isBuffer());
         // check the contents
         assert.equal(file.contents.toString('utf8'), result);
+        assert.equal(file.path, path.resolve(__dirname, '../polyfills.json'));
+
         // done()
       });
 

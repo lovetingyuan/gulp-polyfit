@@ -38,4 +38,5 @@ jspm_packages
 
 polyfills
 gulpfile.js
-
+.idea
+result

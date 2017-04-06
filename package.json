@@ -1,6 +1,6 @@
 {
   "name": "gulp-polyfit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "collect polyfills marked in comments and generate the polyfill script",
   "main": "index.js",
   "scripts": {
@@ -21,8 +21,7 @@
   "dependencies": {
     "acorn": "^5.0.2",
     "gulp-util": "^3.0.8",
-    "through2": "^2.0.3",
-    "ty-step": "^1.0.1"
+    "through2": "^2.0.3"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
