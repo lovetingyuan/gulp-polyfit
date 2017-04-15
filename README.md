@@ -15,7 +15,7 @@ gulp.task('polyfill', function() {
       minify: true, // default: true, minify the polyfill script
       features: [], // extra polyfill features
       filename: 'polyfill.min.js', // the polyfill file name, default: polyfill.min.js
-      result: 'polyfill_list.json' // if specified, will output all the polyfills name
+      result: 'polyfill_list.json' // if specified, will output all the polyfills name to a json file
     }))
     .pipe(gulp.dest('./'))
 })
@@ -60,4 +60,6 @@ run `gulp polyfill`, and the polyfill_list.json will be:
 you can find all support features at https://polyfill.io/v2/docs/features/,
 
 you can use [`LABjs`](https://github.com/getify/LABjs) or [`yepnope.js`](https://github.com/SlexAxton/yepnope.js) to load polyfills conditionally,
+
+you can also use the `cdn` service by [`polyfill.io`](https://polyfill.io/v2/docs/examples) to reduce the number of requests
 
